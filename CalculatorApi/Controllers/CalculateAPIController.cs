@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CalculatorApp.Controllers
@@ -11,28 +12,19 @@ namespace CalculatorApp.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class CalculateAPIController : ControllerBase
-    {
+    {        
 
-       
         [HttpPost("Add")]
         public JsonResult Add([FromBody] CalcRequest requestData)
-        {
-            if (!ModelState.IsValid)
-            {
-                // Return bad request with model state errors
-                var errors = ModelState.Values.SelectMany(v => v.Errors)
-                                       .Select(e => e.ErrorMessage)
-                                       .ToList();
-                return new JsonResult(new { errors });
-            }
-            try
-            {
-                return new JsonResult(Ok(requestData.Num1 + requestData.Num2));
-            }
-            catch (Exception ex)
-            {
-                return new JsonResult(NotFound(ex.Message));
-            }
+        {            
+                try
+                {
+                    return new JsonResult(Ok(Convert.ToDecimal(requestData.Num1) + Convert.ToDecimal(requestData.Num2)));
+                }
+                catch (Exception ex)
+                {
+                    return new JsonResult(NotFound(ex.Message));
+                }           
 
 
         }
@@ -41,7 +33,7 @@ namespace CalculatorApp.Controllers
         {
             try
             {
-                return new JsonResult(Ok(requestData.Num1 - requestData.Num2));
+                return new JsonResult(Ok(Convert.ToDecimal(requestData.Num1) - Convert.ToDecimal(requestData.Num2)));
             }
             catch (Exception ex)
             {
@@ -55,7 +47,7 @@ namespace CalculatorApp.Controllers
         {
             try
             {
-                return new JsonResult(Ok(requestData.Num1 * requestData.Num2));
+                return new JsonResult(Ok(Convert.ToDecimal(requestData.Num1) * Convert.ToDecimal(requestData.Num2)));
             }
             catch (Exception ex)
             {
@@ -69,17 +61,17 @@ namespace CalculatorApp.Controllers
         {
             try
             {
-                if (requestData.Num2 == 0)
+                if (Convert.ToDecimal(requestData.Num2) == 0)
                 {
                     return BadRequest("Division by zero is not allowed");
                 }
-                return new JsonResult(Ok(requestData.Num1 / requestData.Num1));
+                return new JsonResult(Ok(Convert.ToDecimal(requestData.Num1) / Convert.ToDecimal((requestData.Num1))));
             }
             catch (Exception ex)
             {
                 return new JsonResult(NotFound(ex.Message));
             }
 
-        }
+        }    
     }
 }

@@ -32,8 +32,8 @@ namespace CalculatorApplication
             // Create an anonymous object to hold num1 and num2 values
             var requestData = new
             {
-                num1 = int.Parse(txtNum1.Text),  
-                num2 = int.Parse(txtNum2.Text)
+                num1 = txtNum1.Text,  
+                num2 = txtNum2.Text
             };
 
             // Serialize the object to JSON string

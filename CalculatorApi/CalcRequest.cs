@@ -8,12 +8,13 @@ namespace CalculatorApi
 {
     public class CalcRequest
     {
-        [Required(ErrorMessage = "Num1 is required")]
-        [RegularExpression(@"^\d*\.?\d*$", ErrorMessage = "Num1 must be a number")]
-        public double Num1 { get; set; }
-        [Required(ErrorMessage = "Num2 is required")]
-        [RegularExpression(@"^\d*\.?\d*$", ErrorMessage = "Num2 must be a number")]
-        public double Num2 { get; set; }
+        [Required(ErrorMessage = "Number1 is required")]
+        [RegularExpression(@"^-?\d*\.{0,1}\d+$", ErrorMessage = "Number1 must be a number")]
+        public string Num1 { get; set; }
+        [Required(ErrorMessage = "Number2 is required")]
+        [RegularExpression(@"^-?\d*\.{0,1}\d+$", ErrorMessage = "Number2 must be a number")]
+        public string Num2 { get; set; }
+        [RegularExpression(@"^[\+\-\*\/]$", ErrorMessage = "Invalid operation. Allowed operations are +, -, *, /")]
         public string Operation { get; set; }
     }
 }
